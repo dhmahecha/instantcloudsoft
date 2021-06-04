@@ -314,7 +314,7 @@
         "description": "Consulta de una comunicación de tipo mensaje por id."
       }
     },
-    "/v1/email": {
+    "/v1/sms": {
       "get": {
         "summary": "Your GET endpoint",
         "tags": [],
@@ -330,7 +330,8 @@
           }
         },
         "description": ""
-      }
+      },
+      "parameters": []
     }
   },
   "components": {
