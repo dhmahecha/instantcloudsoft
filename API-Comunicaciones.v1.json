@@ -1,0 +1,550 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API-Comunicaciones",
+    "version": "1.0",
+    "description": ""
+  },
+  "servers": [
+    {
+      "url": "http://api.sdh.gov.co/comunicaciones"
+    }
+  ],
+  "paths": {
+    "/v1/mensajes": {
+      "post": {
+        "summary": "Enviar un mensaje",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comunicacion"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-v1-mensajes",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comunicacion"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Consultar mensajes",
+        "operationId": "get-v1-mensajes",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Comunicacion"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Permite consultar mensajes de un usuario. Este servicio debe verificar que quien esta consultando los mensajes tiene en su profile el mismo correo registrado al que esta accediendo.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "description": "Permite indicar que se filtren los que no se han leido",
+            "name": "sinLeer"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "criteria",
+            "description": "Indica un filtro para buscar por contenido y tags"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "pagina",
+            "description": "Cada resultado se retorna paginado, con cada pagina con un maximo de 20 mensjes"
+          }
+        ]
+      }
+    },
+    "/v1/notificaciones": {
+      "get": {
+        "summary": "Acceder y recibir notificaciones",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comunicacion"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-notificaciones",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comunicacion"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "",
+        "operationId": "post-v1-notificaciones",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comunicacion"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comunicacion"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/eventos/{idMensajeExterno}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "idMensajeExterno",
+          "in": "path",
+          "required": true,
+          "description": "Identificador de mensaje entregado por el proveedor de correo al momento del envío de mensaje o notificación."
+        }
+      ],
+      "post": {
+        "summary": "Agregar un evento a un correo",
+        "operationId": "post-v1-notificaciones-id-eventos",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Evento"
+              }
+            }
+          }
+        },
+        "description": "Cada evento que se coloca se agrega a la lista de eventos de la comunicacion. Para el DELIVERY existe un evento, pero si adicionalmente el correo es marcado como SPAM, se registra en un evento diferente. No pueden existir un evento DELIVERY y un evento REJECT al mismo tiempo para una comunicacion.\n\nEsta operación actualiza la información de DELIVERY en la versión OnPremise de notificaciones, cuando se confirma."
+      }
+    },
+    "/v1/adjuntos": {
+      "put": {
+        "summary": "Colocar adjuntos a las comunicaciones",
+        "operationId": "put-v1-adjuntos",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Link.v1"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "Error en el tamaño del archivo"
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "myfile.pdf"
+            },
+            "in": "query",
+            "name": "archivo",
+            "required": true,
+            "description": "Representa el nombre el archivo que se quiere subir."
+          }
+        ],
+        "description": "Permite cargar los archivos que seran usados como adjuntos en uno o mas correos. Por defecto los archivos cargados como adjuntos se eliminan cuando el correo se envia. Sin embargo, con este flag se le indica a comunicaciones que no borre el archivo con el envio (por defecto estara disponible 1 mes). Esto para escenarios donde debo enviar multiples correos con el mismo archivo como adjunto. Sino se envia, por defecto es false.\nNo se pueden subir archivos de mas de 4 MB.\n\nEsto retorna un objeto Link, donde el atributo rel es el nombre del archivo (el que el usuario dejo) y el href seria la ruta retornada por el Blob Storage. Se deben crear dos contenedores: \nEl container en el blob storage seria \"comunicaciones\".\n\nblobStorage.../comunicaciones/persistente **Donde se suben los archivos que indican que no se borran y se mantienen un mes.**\n.../comunicaciones/temporal **Donde se suben los archivos que se eliminan cuando se envia el correo.**",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/File"
+              },
+              "examples": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1/eventos": {
+      "get": {
+        "summary": "Acceder los eventos de una comunicacion",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Evento"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-eventos",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "idComunicacion",
+            "description": "Identificador de la comunicación",
+            "required": true
+          }
+        ],
+        "description": "Permite acceder a los eventos de cualquier comunicacion (mensaje o notificacion). El parametro de path IdComunicacionExterna representa el id entregado al momento de envio por el proveedor externo (para el caso en cuestion en AWS Pinpoint).\n\nSOLO ES PARA USO POR EL PROVEEDOR EXTERNO DE COMUNICACIONES AWS PINPOINT"
+      }
+    },
+    "/v1/notificaciones/{idComunicacion}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "idComunicacion",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Obtener las notificaciones con base en el id propio de comunicacion",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comunicacion"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Hubo un error al tratar de consultar la comunicación con id: {idComunicacion}. La comunicación no existe o no es de tipo notificación."
+          }
+        },
+        "operationId": "get-v1-notificaciones-idComunicacion",
+        "description": "Consulta de una comunicación de tipo notificación por id."
+      }
+    },
+    "/v1/mensajes/{idComunicacion}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "idComunicacion",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Acceder al contenido de una comunicacion",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comunicacion"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Hubo un error al tratar de consultar la comunicación con id: {idComunicacion}. La comunicación no existe o no es de tipo mensaje."
+          }
+        },
+        "operationId": "get-v1-mensajes-idComunicacion",
+        "description": "Consulta de una comunicación de tipo mensaje por id."
+      }
+    },
+    "/v1/email": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-v1-email"
+      },
+      "post": {
+        "summary": "",
+        "operationId": "post-v1-email",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": ""
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Buzon": {
+        "title": "Buzon",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "correo": {
+            "type": "string",
+            "description": "Se usa para especificar el correo particular. Es excluyente de usuario. Si llegan los dos se debe generar un error. Por default deberia ser usuario. Cuando este atributo se diligencia no se puede tener acceso a la trazabilidad del correo."
+          },
+          "usuario": {
+            "$ref": "#/components/schemas/Usuario.v1"
+          }
+        }
+      },
+      "Adjunto": {
+        "title": "Adjunto",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "description": "Nombre de archivo como quiere que se vea en el correo destino."
+          },
+          "uri": {
+            "$ref": "#/components/schemas/Link.v1"
+          },
+          "tipo": {
+            "type": "string",
+            "description": "Representa el tipo de archivo en MIME Type: application/pdf. Sino va el atrbiuto por defecto es PDF."
+          }
+        }
+      },
+      "Comunicacion": {
+        "title": "API de Comunicaciones",
+        "type": "object",
+        "description": "Operaciones y recursos del servicio de comunicaciones",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/Ideunico.v1"
+          },
+          "mensaje": {
+            "type": "string"
+          },
+          "remitente": {
+            "$ref": "#/components/schemas/Buzon"
+          },
+          "destinatarios": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Buzon"
+            }
+          },
+          "destinatariosOculto": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Buzon"
+            }
+          },
+          "destinatariosCopia": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Buzon"
+            }
+          },
+          "adjuntos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Adjunto"
+            }
+          },
+          "contenidos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Adjunto"
+            }
+          },
+          "confidencialidad": {
+            "type": "boolean",
+            "description": "Por defecto es false."
+          },
+          "asunto": {
+            "type": "string"
+          },
+          "fechaEnvio": {
+            "type": "string",
+            "description": "Si es un mensaje aqui tendria la fecha de envio y si es notificacion aqui tendria la fecha de notificado. Este atributo es para propositos de consulta."
+          },
+          "entregado": {
+            "type": "boolean"
+          },
+          "sinLeer": {
+            "type": "boolean",
+            "description": "Indica si el mensaje se encuentra leido o no"
+          },
+          "tags": {
+            "type": "array",
+            "description": "Es un arreglo de mensajes para asignar atributos particulares a un correo.",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "mensaje",
+          "remitente",
+          "destinatarios",
+          "asunto"
+        ]
+      },
+      "Evento": {
+        "title": "Evento",
+        "type": "object",
+        "description": "Define uno de los tipos de eventos que se pueden dar sobre los mensajes. ",
+        "properties": {
+          "tipo": {
+            "type": "string",
+            "enum": [
+              "DELIVERY",
+              "REJECT",
+              "OPEN",
+              "SPAM"
+            ],
+            "description": "Define si es entrega, rechazo o apertura, con los datos adicionales. "
+          },
+          "contenido": {
+            "type": "string",
+            "description": "Cualquier contenido adicional detallado que sirva como auditoria y trazabilidad en formato JSON",
+            "example": "{   \"eventType\": \"Delivery\",   \"mail\": {     \"timestamp\": \"2016-10-19T23:20:52.240Z\",     \"source\": \"sender@example.com\",     \"sourceArn\": \"arn:aws:ses:us-east-1:123456789012:identity/sender@example.com\",     \"sendingAccountId\": \"123456789012\",     \"messageId\": \"EXAMPLE7c191be45-e9aedb9a-02f9-4d12-a87d-dd0099a07f8a-000000\",     \"destination\": [       \"recipient@example.com\"     ],     \"headersTruncated\": false,     \"headers\": [       {         \"name\": \"From\",         \"value\": \"sender@example.com\"       },       {         \"name\": \"To\",         \"value\": \"recipient@example.com\"       },       {         \"name\": \"Subject\",         \"value\": \"Message sent from Amazon SES\"       },       {         \"name\": \"MIME-Version\",         \"value\": \"1.0\"       },       {         \"name\": \"Content-Type\",         \"value\": \"text/html; charset=UTF-8\"       },       {         \"name\": \"Content-Transfer-Encoding\",         \"value\": \"7bit\"       }     ],     \"commonHeaders\": {       \"from\": [         \"sender@example.com\"       ],       \"to\": [         \"recipient@example.com\"       ],       \"messageId\": \"EXAMPLE7c191be45-e9aedb9a-02f9-4d12-a87d-dd0099a07f8a-000000\",       \"subject\": \"Message sent from Amazon SES\"     },     \"tags\": {       \"ses:configuration-set\": [         \"ConfigSet\"       ],       \"ses:source-ip\": [         \"192.0.2.0\"       ],       \"ses:from-domain\": [         \"example.com\"       ],       \"ses:caller-identity\": [         \"ses_user\"       ],       \"ses:outgoing-ip\": [         \"192.0.2.0\"       ],       \"myCustomTag1\": [         \"myCustomTagValue1\"       ],       \"myCustomTag2\": [         \"myCustomTagValue2\"       ]           }   },   \"delivery\": {     \"timestamp\": \"2016-10-19T23:21:04.133Z\",     \"processingTimeMillis\": 11893,     \"recipients\": [       \"recipient@example.com\"     ],     \"smtpResponse\": \"250 2.6.0 Message received\",     \"reportingMTA\": \"mta.example.com\"   } }"
+          },
+          "idComunicacion": {
+            "type": "string",
+            "description": "Representa el identificador unico del mensaje o notificacion al que el evento esta ligado y solo aplica cuando se notifica a la version onpremise de DIAN."
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "Fecha con horas, minutos, segundos y milisegundos. ISO 6801 de fechas.\n",
+            "example": "{   \"eventType\": \"Delivery\",   \"mail\": {     \"timestamp\": \"2016-10-19T23:20:52.240Z\",     \"source\": \"sender@example.com\",     \"sourceArn\": \"arn:aws:ses:us-east-1:123456789012:identity/sender@example.com\",     \"sendingAccountId\": \"123456789012\",     \"messageId\": \"EXAMPLE7c191be45-e9aedb9a-02f9-4d12-a87d-dd0099a07f8a-000000\",     \"destination\": [       \"recipient@example.com\"     ],     \"headersTruncated\": false,     \"headers\": [       {         \"name\": \"From\",         \"value\": \"sender@example.com\"       },       {         \"name\": \"To\",         \"value\": \"recipient@example.com\"       },       {         \"name\": \"Subject\",         \"value\": \"Message sent from Amazon SES\"       },       {         \"name\": \"MIME-Version\",         \"value\": \"1.0\"       },       {         \"name\": \"Content-Type\",         \"value\": \"text/html; charset=UTF-8\"       },       {         \"name\": \"Content-Transfer-Encoding\",         \"value\": \"7bit\"       }     ],     \"commonHeaders\": {       \"from\": [         \"sender@example.com\"       ],       \"to\": [         \"recipient@example.com\"       ],       \"messageId\": \"EXAMPLE7c191be45-e9aedb9a-02f9-4d12-a87d-dd0099a07f8a-000000\",       \"subject\": \"Message sent from Amazon SES\"     },     \"tags\": {       \"ses:configuration-set\": [         \"ConfigSet\"       ],       \"ses:source-ip\": [         \"192.0.2.0\"       ],       \"ses:from-domain\": [         \"example.com\"       ],       \"ses:caller-identity\": [         \"ses_user\"       ],       \"ses:outgoing-ip\": [         \"192.0.2.0\"       ],       \"myCustomTag1\": [         \"myCustomTagValue1\"       ],       \"myCustomTag2\": [         \"myCustomTagValue2\"       ]           }   },   \"delivery\": {     \"timestamp\": \"2016-10-19T23:21:04.133Z\",     \"processingTimeMillis\": 11893,     \"recipients\": [       \"recipient@example.com\"     ],     \"smtpResponse\": \"250 2.6.0 Message received\",     \"reportingMTA\": \"mta.example.com\"   } }"
+          },
+          "id": {
+            "type": "string",
+            "description": "Idnetificador único del evento"
+          }
+        },
+        "required": [
+          "tipo",
+          "contenido",
+          "timestamp",
+          "id"
+        ]
+      },
+      "File": {
+        "title": "File",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "Link.v1": {
+        "title": "Link",
+        "type": "object",
+        "description": "Define una referencia a un recurso de forma estándar.",
+        "properties": {
+          "rel": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "rel",
+          "href"
+        ],
+        "x-examples": {
+          "example-1": {}
+        }
+      },
+      "Usuario.v1": {
+        "title": "Usuario",
+        "type": "object",
+        "properties": {
+          "identificacion": {
+            "type": "string",
+            "description": "En la forma CC-737683433"
+          },
+          "organizacion": {
+            "type": "string",
+            "description": "nit-80038483434"
+          }
+        },
+        "required": [
+          "identificacion"
+        ],
+        "description": ""
+      },
+      "Ideunico.v1": {
+        "title": "DIdeUnico",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "identificador": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
