@@ -316,7 +316,7 @@
     },
     "/v1/sms": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "SMS",
         "tags": [],
         "responses": {
           "200": {
@@ -363,7 +363,8 @@
             "in": "query",
             "name": "pagina"
           }
-        ]
+        ],
+        "description": "consulta de mensajes sms por lista de parámetros"
       },
       "post": {
         "summary": "",
