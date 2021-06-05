@@ -632,7 +632,7 @@
         "description": ""
       },
       "Ideunico.v1": {
-        "title": "DIdeUnico",
+        "title": "IdeUnico",
         "type": "object",
         "description": "",
         "properties": {
@@ -644,7 +644,7 @@
       "SMS": {
         "title": "SMS",
         "type": "object",
-        "description": "",
+        "description": "Comunicación de tipo sms",
         "properties": {
           "id": {
             "$ref": "#/components/schemas/Ideunico.v1"
