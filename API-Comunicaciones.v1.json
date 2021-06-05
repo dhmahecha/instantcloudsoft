@@ -397,6 +397,36 @@
         }
       },
       "parameters": []
+    },
+    "/v1/sms/{idComunicacion}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "idComunicacion",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SMS"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-sms-idComunicacion",
+        "description": "Permite acceder al contenido de un sms"
+      }
     }
   },
   "components": {
