@@ -530,7 +530,7 @@
             "type": "array",
             "description": "Es un arreglo de mensajes para asignar atributos particulares a un correo.",
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/Param"
             }
           }
         },
@@ -671,13 +671,29 @@
           "tags": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/Param"
             }
           },
           "destinatario": {
             "$ref": "#/components/schemas/Usuario.v1"
           }
         }
+      },
+      "Param": {
+        "title": "Param",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "": {
+            "type": "string"
+          }
+        },
+        "description": ""
       }
     }
   }
