@@ -318,18 +318,83 @@
       "get": {
         "summary": "Your GET endpoint",
         "tags": [],
-        "responses": {},
-        "operationId": "get-v1-email"
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SMS"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-email",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "sinLeer"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "criteria"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "pagina"
+          }
+        ]
       },
       "post": {
         "summary": "",
         "operationId": "post-v1-email",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SMS"
+                }
+              }
+            }
           }
         },
-        "description": ""
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "": {
+                    "$ref": "#/components/schemas/SMS"
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "parameters": []
     }
@@ -543,6 +608,43 @@
         "properties": {
           "identificador": {
             "type": "string"
+          }
+        }
+      },
+      "SMS": {
+        "title": "SMS",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/Ideunico.v1"
+          },
+          "mensaje": {
+            "type": "string"
+          },
+          "telefonoOrigen": {
+            "type": "string"
+          },
+          "telefonoDestino": {
+            "type": "string"
+          },
+          "fechaEnvio": {
+            "type": "string"
+          },
+          "entregado": {
+            "type": "boolean"
+          },
+          "sinLeer": {
+            "type": "boolean"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "destinatario": {
+            "$ref": "#/components/schemas/Usuario.v1"
           }
         }
       }
