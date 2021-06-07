@@ -21,7 +21,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Comunicacion"
+                  "$ref": "#/components/schemas/Mensaje"
                 }
               }
             }
@@ -49,7 +49,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Comunicacion"
+                    "$ref": "#/components/schemas/Mensaje"
                   }
                 }
               }
@@ -81,6 +81,49 @@
             "in": "query",
             "name": "pagina",
             "description": "Cada resultado se retorna paginado, con cada pagina con un maximo de 20 mensjes"
+          }
+        ]
+      },
+      "put": {
+        "summary": "",
+        "operationId": "put-v1-mensajes",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mensaje"
+                }
+              }
+            }
+          }
+        },
+        "description": "Permite actualizar el atributo SinLeer para un mensaje dada también la identificación",
+        "parameters": [
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "sinLeer",
+            "description": "atributo que indica si el mensaje fue leído"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "identificación",
+            "description": "número de identificación del usuario"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "id",
+            "description": "identificador de la comunicación"
           }
         ]
       }
@@ -464,7 +507,7 @@
           }
         }
       },
-      "Comunicacion": {
+      "Mensaje": {
         "title": "API de Comunicaciones",
         "type": "object",
         "description": "Operaciones y recursos del servicio de comunicaciones",
