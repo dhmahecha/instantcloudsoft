@@ -471,6 +471,44 @@
         "operationId": "get-v1-sms-idComunicacion",
         "description": "Permite acceder al contenido de un sms"
       }
+    },
+    "/v1/adjuntos/{idComunicacion}/documentos/{documentoId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "idComunicacion",
+          "in": "path",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "documentoId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Descargar Adjunto",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/File"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-adjuntos-idComunicacion-consultar",
+        "description": "Permite descargar un documento adjunto asociado a una comunicación"
+      }
     }
   },
   "components": {
