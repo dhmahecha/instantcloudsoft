@@ -114,14 +114,6 @@
               "type": "string"
             },
             "in": "query",
-            "name": "identificación",
-            "description": "número de identificación del usuario"
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
             "name": "id",
             "description": "identificador de la comunicación"
           }
