@@ -281,6 +281,32 @@
           }
         ],
         "description": "Permite acceder a los eventos de cualquier comunicacion (mensaje o notificacion). El parametro de path IdComunicacionExterna representa el id entregado al momento de envio por el proveedor externo (para el caso en cuestion en AWS Pinpoint).\n\nSOLO ES PARA USO POR EL PROVEEDOR EXTERNO DE COMUNICACIONES AWS PINPOINT"
+      },
+      "post": {
+        "summary": "Agregar un evento de correo",
+        "operationId": "post-v1-eventos",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Evento"
+                }
+              }
+            }
+          }
+        },
+        "description": "Cada evento que se coloca se agrega a la lista de eventos de la comunicacion. Para el DELIVERY existe un evento, pero si adicionalmente el correo es marcado como SPAM, se registra en un evento diferente. No pueden existir un evento DELIVERY y un evento REJECT al mismo tiempo para una comunicacion.\n\nEsta operación actualiza la información de DELIVERY en la versión OnPremise de notificaciones, cuando se confirma.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Evento"
+              }
+            }
+          }
+        }
       }
     },
     "/v1/notificaciones/{idComunicacion}": {
@@ -545,7 +571,7 @@
           "id": {
             "$ref": "#/components/schemas/Ideunico.v1"
           },
-          "mensaje": {
+          "contenido": {
             "type": "string"
           },
           "remitente": {
@@ -608,7 +634,7 @@
           }
         },
         "required": [
-          "mensaje",
+          "contenido",
           "remitente",
           "destinatarios",
           "asunto"
