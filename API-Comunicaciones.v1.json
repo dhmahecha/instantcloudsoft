@@ -749,7 +749,7 @@
           "id": {
             "$ref": "#/components/schemas/Ideunico.v1"
           },
-          "mensaje": {
+          "contenido": {
             "type": "string"
           },
           "telefonoOrigen": {
