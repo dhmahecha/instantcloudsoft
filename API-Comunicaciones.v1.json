@@ -292,7 +292,13 @@
         "operationId": "post-v1-notificaciones-id-eventos",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Eventos informados exitosamente"
+          },
+          "400": {
+            "description": "Ocurrio un error al tratar de procesar la solicitud"
+          },
+          "404": {
+            "description": "Error al obtener la clasificación de eventos"
           }
         },
         "requestBody": {
@@ -320,7 +326,17 @@
             }
           }
         },
-        "description": "Los eventos se categorizan en DELIVERY, SPAM y REJECT.\nREJECT: Dropped y Bounced\nDELIVERY: Delivered, Opened y Clicked\nSPAM: Spam Reports\nSe recibe un arreglo de eventos por, cada uno se categoriza y se almacena por comunicación generada. Solo se puede almacenar un tipo de evento REJECT y un tipo de evento DELIVERY. Si ya existe un evento de tipo DELIVERY para una comunicación y posteriormente llega otro tipo de evento no será recibido. Si ya se ha almacenado un evento de tipo SPAM, no se debe permitir el almacenamiento de un evento de tipo REJECT."
+        "description": "Los eventos se categorizan en DELIVERY, SPAM y REJECT.\nREJECT: Dropped y Bounced\nDELIVERY: Delivered, Opened y Clicked\nSPAM: Spam Reports\nSe recibe un arreglo de eventos por, cada uno se categoriza y se almacena por comunicación generada. Solo se puede almacenar un tipo de evento REJECT y un tipo de evento DELIVERY. Si ya existe un evento de tipo DELIVERY para una comunicación y posteriormente llega otro tipo de evento no será recibido. Si ya se ha almacenado un evento de tipo SPAM, no se debe permitir el almacenamiento de un evento de tipo REJECT.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Authorization",
+            "description": "Token JWT del usuario"
+          }
+        ]
       }
     },
     "/v1/adjuntos": {
