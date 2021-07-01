@@ -105,6 +105,15 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Ocurrio un error al tratar de procesar la solicitud"
+          },
+          "401": {
+            "description": "Error al obtener la información del usuario"
+          },
+          "404": {
+            "description": "Parámetro identificación no encontrado\n"
           }
         },
         "description": "Permite consultar mensajes de un usuario, dado un conjunto de parámetros.",
