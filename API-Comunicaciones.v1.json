@@ -464,6 +464,15 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Comunicacion"
+                },
+                "examples": {
+                  "Ejemplo respuesta": {
+                    "value": {
+                      "codigo": 200,
+                      "mensaje": "{\"asunto\":\"Certificado de completitud curso\",\"remitente\":{\"correo\":\"hola@movilidadbogota.gov.co\",\"usuario\":null},\"destinatarios\":[{\"correo\":\"correo@gmail.com\",\"usuario\":{\"identificacion\":\"CC-79590984\",\"organizacion\":\"CC-79590984\"}}],\"destinatariosCopia\":null,\"destinatariosOcultos\":null,\"adjuntos\":[{\"nombre\":\"certificado.jpg\",\"uri\":{\"rel\":\"certificado.jpg\",\"href\":\"https://stcomunicacionesmovprod.blob.core.windows.net/comunicaciones/temporal/51e5dc20-b720-428f-8a63-4573465b7866.jpg\",\"method\":null},\"tipo\":\"image/jpg\",\"disposicion\":null}],\"contenidos\":null,\"confidencialidad\":false,\"sinLeer\":false,\"Type\":null,\"id\":\"8ae85df3-0483-4c81-877d-ff53d8defe15\",\"mensaje\":\"<div  align='justify'><p align='justify'>Saludos Andrés Perez Díaz, <br><br>Se anexa el certificado de completitud exitoso para el curso tomado el 27 de abril de 2021.<br><br>De acuerdo con el Art. 7° de la Ley 1843 de 2017 que adiciona el parágrafo 2° del Art. 136 de la Ley 769 de 2002, cuando se demuestre que la orden de comparendo por infracción a las normas de tránsito detectada por sistemas automáticos, semiautomáticos y otros medios tecnológicos, no fue notificada o indebidamente notificada, los términos establecidos para la reducción de la sanción comenzarán a correr a partir de la fecha de la notificación del comparendo.<br><br>Para ello, puede presentar por escrito ante la Subdirección de Contravenciones de la Secretaría Distrital de Movilidad la solicitud de revocatoria directa, del acto administrativo por medio del cual se impone la sanción, esta figura se encuentra regulada en el Art. 93 y siguientes de la Ley 1437 de 2011.</p></div>\",\"fechaEnvio\":null,\"entregado\":false,\"tags\":null}",
+                      "descripcion": null
+                    }
+                  }
                 }
               }
             }
@@ -478,7 +487,7 @@
     },
     "/v1/sms": {
       "get": {
-        "summary": "SMS",
+        "summary": "Obtener SMS por parámetros",
         "tags": [],
         "responses": {
           "200": {
@@ -487,9 +496,24 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SMS"
+                },
+                "examples": {
+                  "Ejemplo respuesta": {
+                    "value": {
+                      "codigo": 200,
+                      "mensaje": "{\"telefonoOrigen\":\"+3001111111\",\"telefonoDestino\":\"+573912402391\",\"destinatario\":{\"identificacion\":\"CC-79590984\",\"organizacion\":\"CC-79590984\"},\"Type\":null,\"id\":\"489c8fc6-ce80-4fcc-a8d6-7dc5f116ee7f\",\"mensaje\":\"Usted completo su curso con éxito\",\"fechaEnvio\":null,\"entregado\":false,\"tags\":null}",
+                      "descripcion": null
+                    }
+                  }
                 }
               }
             }
+          },
+          "400": {
+            "description": "Ocurrio un error al tratar de procesar la solicitud"
+          },
+          "401": {
+            "description": "Error al obtener la información del usuario"
           }
         },
         "operationId": "get-v1-email",
@@ -509,20 +533,30 @@
               "type": "string"
             },
             "in": "query",
-            "name": "criteria"
+            "name": "criteria",
+            "description": "Indica un filtro para buscar por contenido y tags"
           },
           {
             "schema": {
               "type": "string"
             },
             "in": "query",
-            "name": "pagina"
+            "name": "pagina",
+            "description": "Cada resultado se retorna paginado, con cada pagina con un maximo de 20 mensjes"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Authorization",
+            "description": "Token JWT "
           }
         ],
         "description": "consulta de mensajes sms por lista de parámetros"
       },
       "post": {
-        "summary": "",
+        "summary": "Crear sms",
         "operationId": "post-v1-email",
         "responses": {
           "200": {
@@ -531,9 +565,24 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SMS"
+                },
+                "examples": {
+                  "Ejemplo respuesta": {
+                    "value": {
+                      "codigo": 200,
+                      "mensaje": "{\"telefonoOrigen\":\"+3001111111\",\"telefonoDestino\":\"+573912402391\",\"destinatario\":{\"identificacion\":\"CC-79590984\",\"organizacion\":\"CC-79590984\"},\"Type\":null,\"id\":\"489c8fc6-ce80-4fcc-a8d6-7dc5f116ee7f\",\"mensaje\":\"Usted completo su curso con éxito\",\"fechaEnvio\":null,\"entregado\":false,\"tags\":null}",
+                      "descripcion": null
+                    }
+                  }
                 }
               }
             }
+          },
+          "400": {
+            "description": "Ocurrio un error al tratar de procesar la solicitud"
+          },
+          "401": {
+            "description": "Error al obtener la información del usuario"
           }
         },
         "description": "Permite la creación y envío de comunicaciones de tipo sms.",
@@ -547,10 +596,32 @@
                     "$ref": "#/components/schemas/SMS"
                   }
                 }
+              },
+              "examples": {
+                "Ejemplo": {
+                  "value": {
+                    "Mensaje": "Usted completo su curso con éxito",
+                    "TelefonoDestino": "+573912402391",
+                    "Destinatario": {
+                      "Identificacion": "CC-79590984",
+                      "Organizacion": "CC-79590984"
+                    }
+                  }
+                }
               }
             }
           }
-        }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Authorization",
+            "description": "Token JWT"
+          }
+        ]
       },
       "parameters": []
     },
@@ -575,13 +646,28 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SMS"
+                },
+                "examples": {
+                  "Ejemplo respuesta": {
+                    "value": {
+                      "codigo": 200,
+                      "mensaje": "{\"telefonoOrigen\":\"+3001111111\",\"telefonoDestino\":\"+573912402391\",\"destinatario\":{\"identificacion\":\"CC-79590984\",\"organizacion\":\"CC-79590984\"},\"Type\":null,\"id\":\"489c8fc6-ce80-4fcc-a8d6-7dc5f116ee7f\",\"mensaje\":\"Usted completo su curso con éxito\",\"fechaEnvio\":null,\"entregado\":false,\"tags\":null}",
+                      "descripcion": null
+                    }
+                  }
                 }
               }
             }
+          },
+          "400": {
+            "description": "Ocurrio un error al tratar de procesar la solicitud"
+          },
+          "404": {
+            "description": "No hay resultados para la búsqueda, Comunicación con identificador {id} no encontrada"
           }
         },
         "operationId": "get-v1-sms-idComunicacion",
-        "description": "Permite acceder al contenido de un sms"
+        "description": "Permite acceder al contenido de un sms dado el identificador de la comunicación."
       }
     },
     "/v1/adjuntos/{idComunicacion}/documentos/{documentoId}": {
@@ -628,7 +714,7 @@
       "Buzon": {
         "title": "Buzon",
         "type": "object",
-        "description": "",
+        "description": "Buzón del usuario, específica la identificación y correo.",
         "properties": {
           "correo": {
             "type": "string",
@@ -788,24 +874,26 @@
         "title": "Link",
         "type": "object",
         "description": "Define una referencia a un recurso de forma estándar.",
+        "x-examples": {
+          "example-1": {}
+        },
         "properties": {
           "rel": {
             "type": "string"
           },
           "href": {
-            "type": "string"
+            "type": "string",
+            "description": "Uri de la ubicación del archivo en el storage."
           },
           "method": {
-            "type": "string"
+            "type": "string",
+            "description": "Método http del archivo"
           }
         },
         "required": [
           "rel",
           "href"
-        ],
-        "x-examples": {
-          "example-1": {}
-        }
+        ]
       },
       "Usuario.v1": {
         "title": "Usuario",
