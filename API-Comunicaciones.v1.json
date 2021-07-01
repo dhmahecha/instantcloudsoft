@@ -275,70 +275,6 @@
         }
       }
     },
-    "/v1/eventos/{idMensajeExterno}": {
-      "parameters": [
-        {
-          "schema": {
-            "type": "string"
-          },
-          "name": "idMensajeExterno",
-          "in": "path",
-          "required": true,
-          "description": "Identificador de mensaje entregado por el proveedor de correo al momento del envío de mensaje o notificación."
-        }
-      ],
-      "post": {
-        "summary": "Agregar un evento a un correo",
-        "operationId": "post-v1-notificaciones-id-eventos",
-        "responses": {
-          "200": {
-            "description": "Eventos informados exitosamente"
-          },
-          "400": {
-            "description": "Ocurrio un error al tratar de procesar la solicitud"
-          },
-          "404": {
-            "description": "Error al obtener la clasificación de eventos"
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Evento"
-              },
-              "examples": {
-                "Ejemplo": {
-                  "value": [
-                    {
-                      "email": "correo@gmail.com",
-                      "event": "open",
-                      "ip": "66.102.8.95",
-                      "sg_content_type": "html",
-                      "sg_event_id": "f_aHV-YcSmCYKYpKtbC1cA",
-                      "sg_message_id": "JYBR1Ew0Sr-KbkvklPeo4w.filterdrecv-79b856d5bc-9kpbj-1-60C00B03-73.0",
-                      "timestamp": 1623198481,
-                      "useragent": "Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko Firefox/11.0 (via ggpht.com GoogleImageProxy)"
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "description": "Los eventos se categorizan en DELIVERY, SPAM y REJECT.\nREJECT: Dropped y Bounced\nDELIVERY: Delivered, Opened y Clicked\nSPAM: Spam Reports\nSe recibe un arreglo de eventos por, cada uno se categoriza y se almacena por comunicación generada. Solo se puede almacenar un tipo de evento REJECT y un tipo de evento DELIVERY. Si ya existe un evento de tipo DELIVERY para una comunicación y posteriormente llega otro tipo de evento no será recibido. Si ya se ha almacenado un evento de tipo SPAM, no se debe permitir el almacenamiento de un evento de tipo REJECT.",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Authorization",
-            "description": "Token JWT del usuario"
-          }
-        ]
-      }
-    },
     "/v1/adjuntos": {
       "put": {
         "summary": "Colocar adjuntos a las comunicaciones",
@@ -439,7 +375,7 @@
             "required": true
           }
         ],
-        "description": "Permite acceder a los eventos de cualquier comunicacion (mensaje o notificacion). El parametro de path IdComunicacionExterna representa el id entregado al momento de envio por el proveedor externo (para el caso en cuestion en AWS Pinpoint).\n\nSOLO ES PARA USO POR EL PROVEEDOR EXTERNO DE COMUNICACIONES AWS PINPOINT"
+        "description": "Permite acceder a los eventos de cualquier comunicacion (mensaje o notificacion). El parametro de path idMensajeExterno representa el id entregado al momento de envio por el proveedor externo."
       },
       "post": {
         "summary": "Agregar un evento de correo",
@@ -454,6 +390,12 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Ocurrio un error al tratar de procesar la solicitud"
+          },
+          "404": {
+            "description": "Error al obtener la clasificación de eventos"
           }
         },
         "description": "Los eventos se categorizan en DELIVERY, SPAM y REJECT.\nREJECT: Dropped y Bounced\nDELIVERY: Delivered, Opened y Clicked\nSPAM: Spam Reports\nSe recibe un arreglo de eventos por, cada uno se categoriza y se almacena por comunicación generada. Solo se puede almacenar un tipo de evento REJECT y un tipo de evento DELIVERY. Si ya existe un evento de tipo DELIVERY para una comunicación y posteriormente llega otro tipo de evento no será recibido. Si ya se ha almacenado un evento de tipo SPAM, no se debe permitir el almacenamiento de un evento de tipo REJECT.",
