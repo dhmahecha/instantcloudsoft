@@ -22,6 +22,15 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Mensaje"
+                },
+                "examples": {
+                  "Ejemplo respuesta": {
+                    "value": {
+                      "codigo": 200,
+                      "mensaje": "{\"asunto\":\"Certificado de completitud curso\",\"remitente\":{\"correo\":\"hola@movilidadbogota.gov.co\",\"usuario\":null},\"destinatarios\":[{\"correo\":\"correo@gmail.com\",\"usuario\":{\"identificacion\":\"CC-79590984\",\"organizacion\":\"CC-79590984\"}}],\"destinatariosCopia\":null,\"destinatariosOcultos\":null,\"adjuntos\":[{\"nombre\":\"certificado.jpg\",\"uri\":{\"rel\":\"certificado.jpg\",\"href\":\"https://stcomunicacionesmovprod.blob.core.windows.net/comunicaciones/temporal/51e5dc20-b720-428f-8a63-4573465b7866.jpg\",\"method\":null},\"tipo\":\"image/jpg\",\"disposicion\":null}],\"contenidos\":null,\"confidencialidad\":false,\"sinLeer\":false,\"Type\":null,\"id\":\"8ae85df3-0483-4c81-877d-ff53d8defe15\",\"mensaje\":\"<div  align='justify'><p align='justify'>Saludos Andrés Perez Díaz, <br><br>Se anexa el certificado de completitud exitoso para el curso tomado el 27 de abril de 2021.<br><br>De acuerdo con el Art. 7° de la Ley 1843 de 2017 que adiciona el parágrafo 2° del Art. 136 de la Ley 769 de 2002, cuando se demuestre que la orden de comparendo por infracción a las normas de tránsito detectada por sistemas automáticos, semiautomáticos y otros medios tecnológicos, no fue notificada o indebidamente notificada, los términos establecidos para la reducción de la sanción comenzarán a correr a partir de la fecha de la notificación del comparendo.<br><br>Para ello, puede presentar por escrito ante la Subdirección de Contravenciones de la Secretaría Distrital de Movilidad la solicitud de revocatoria directa, del acto administrativo por medio del cual se impone la sanción, esta figura se encuentra regulada en el Art. 93 y siguientes de la Ley 1437 de 2011.</p></div>\",\"fechaEnvio\":null,\"entregado\":false,\"tags\":null}",
+                      "descripcion": null
+                    }
+                  }
                 }
               }
             }
@@ -84,12 +93,21 @@
                   "items": {
                     "$ref": "#/components/schemas/Mensaje"
                   }
+                },
+                "examples": {
+                  "Ejemplo respuesta": {
+                    "value": {
+                      "codigo": 200,
+                      "mensaje": "[{\"asunto\":\"Certificado de completitud curso\",\"remitente\":{\"correo\":\"hola@movilidadbogota.gov.co\",\"usuario\":null},\"destinatarios\":[{\"correo\":\"correo@gmail.com\",\"usuario\":{\"identificacion\":\"CC-79590984\",\"organizacion\":\"CC-79590984\"}}],\"destinatariosCopia\":null,\"destinatariosOcultos\":null,\"adjuntos\":[{\"nombre\":\"NuevoNombre.png\",\"uri\":{\"rel\":\"certificado.jpg\",\"href\":\"https://stcomunicacionesmovdev.blob.core.windows.net/comunicaciones/temporal/a6429cc2-a079-48f8-b366-b7e133ce2413.jpg\",\"method\":null},\"tipo\":\"image/png\",\"disposicion\":null}],\"contenidos\":null,\"confidencialidad\":false,\"sinLeer\":false,\"Type\":\"Mensaje\",\"id\":\"afa52848-b3ef-4f2a-b321-6ebc7459e9d6\",\"mensaje\":\"<div  align='justify'><p align='justify'>Saludos Andrés Perez Díaz, <br><br>Se anexa el certificado de completitud exitoso para el curso tomado el 27 de abril de 2021.<br><br>De acuerdo con el Art. 7° de la Ley 1843 de 2017 que adiciona el parágrafo 2° del Art. 136 de la Ley 769 de 2002, cuando se demuestre que la orden de comparendo por infracción a las normas de tránsito detectada por sistemas automáticos, semiautomáticos y otros medios tecnológicos, no fue notificada o indebidamente notificada, los términos establecidos para la reducción de la sanción comenzarán a correr a partir de la fecha de la notificación del comparendo.<br><br>Para ello, puede presentar por escrito ante la Subdirección de Contravenciones de la Secretaría Distrital de Movilidad la solicitud de revocatoria directa, del acto administrativo por medio del cual se impone la sanción, esta figura se encuentra regulada en el Art. 93 y siguientes de la Ley 1437 de 2011.</p></div>\",\"fechaEnvio\":null,\"entregado\":false,\"tags\":null},{\"asunto\":\"Certificado de completitud curso\",\"remitente\":{\"correo\":\"hola@movilidadbogota.gov.co\",\"usuario\":null},\"destinatarios\":[{\"correo\":\"correo1@gmail.com\",\"usuario\":{\"identificacion\":\"CC-79590984\",\"organizacion\":\"CC-79590984\"}}],\"destinatariosCopia\":null,\"destinatariosOcultos\":null,\"adjuntos\":[{\"nombre\":\"NuevoNombre.png\",\"uri\":{\"rel\":\"certificado.jpg\",\"href\":\"https://stcomunicacionesmovdev.blob.core.windows.net/comunicaciones/temporal/a6429cc2-a079-48f8-b366-b7e133ce2413.jpg\",\"method\":null},\"tipo\":\"image/png\",\"disposicion\":null}],\"contenidos\":null,\"confidencialidad\":false,\"sinLeer\":false,\"Type\":\"Mensaje\",\"id\":\"7e9f13b8-e553-4fca-8c31-beb6ad2404a9\",\"mensaje\":\"<div  align='justify'><p align='justify'>Saludos Andrés Perez Díaz, <br><br>Se anexa el certificado de completitud exitoso para el curso tomado el 27 de abril de 2021.<br><br>De acuerdo con el Art. 7° de la Ley 1843 de 2017 que adiciona el parágrafo 2° del Art. 136 de la Ley 769 de 2002, cuando se demuestre que la orden de comparendo por infracción a las normas de tránsito detectada por sistemas automáticos, semiautomáticos y otros medios tecnológicos, no fue notificada o indebidamente notificada, los términos establecidos para la reducción de la sanción comenzarán a correr a partir de la fecha de la notificación del comparendo.<br><br>Para ello, puede presentar por escrito ante la Subdirección de Contravenciones de la Secretaría Distrital de Movilidad la solicitud de revocatoria directa, del acto administrativo por medio del cual se impone la sanción, esta figura se encuentra regulada en el Art. 93 y siguientes de la Ley 1437 de 2011.</p></div>\",\"fechaEnvio\":\"06/16/2021 09:53:08\",\"entregado\":true,\"tags\":null},{\"asunto\":\"Certificado de completitud curso\",\"remitente\":{\"correo\":\"hola@movilidadbogota.gov.co\",\"usuario\":null},\"destinatarios\":[{\"correo\":\"correo@gmail.com\",\"usuario\":{\"identificacion\":\"CC-79590984\",\"organizacion\":\"CC-79590984\"}}],\"destinatariosCopia\":null,\"destinatariosOcultos\":null,\"adjuntos\":[{\"nombre\":\"NuevoNombre.png\",\"uri\":{\"rel\":\"certificado.jpg\",\"href\":\"https://stcomunicacionesmovdev.blob.core.windows.net/comunicaciones/temporal/a6429cc2-a079-48f8-b366-b7e133ce2413.jpg\",\"method\":null},\"tipo\":\"image/png\",\"disposicion\":null}],\"contenidos\":null,\"confidencialidad\":false,\"sinLeer\":false,\"Type\":\"Mensaje\",\"id\":\"7aeb1a90-49aa-4893-b348-bdf504361ef0\",\"mensaje\":\"<div  align='justify'><p align='justify'>Saludos Andrés Perez Díaz, <br><br>Se anexa el certificado de completitud exitoso para el curso tomado el 27 de abril de 2021.<br><br>De acuerdo con el Art. 7° de la Ley 1843 de 2017 que adiciona el parágrafo 2° del Art. 136 de la Ley 769 de 2002, cuando se demuestre que la orden de comparendo por infracción a las normas de tránsito detectada por sistemas automáticos, semiautomáticos y otros medios tecnológicos, no fue notificada o indebidamente notificada, los términos establecidos para la reducción de la sanción comenzarán a correr a partir de la fecha de la notificación del comparendo.<br><br>Para ello, puede presentar por escrito ante la Subdirección de Contravenciones de la Secretaría Distrital de Movilidad la solicitud de revocatoria directa, del acto administrativo por medio del cual se impone la sanción, esta figura se encuentra regulada en el Art. 93 y siguientes de la Ley 1437 de 2011.</p></div>\",\"fechaEnvio\":\"06/16/2021 08:15:53\",\"entregado\":true,\"tags\":null},{\"asunto\":\"Certificado de completitud curso\",\"remitente\":{\"correo\":\"hola@movilidadbogota.gov.co\",\"usuario\":null},\"destinatarios\":[{\"correo\":\"correo@gmail.com\",\"usuario\":{\"identificacion\":\"CC-79590984\",\"organizacion\":\"CC-79590984\"}}],\"destinatariosCopia\":null,\"destinatariosOcultos\":null,\"adjuntos\":[{\"nombre\":\"NuevoNombre.png\",\"uri\":{\"rel\":\"certificado.jpg\",\"href\":\"https://stcomunicacionesmovdev.blob.core.windows.net/comunicaciones/temporal/a6429cc2-a079-48f8-b366-b7e133ce2413.jpg\",\"method\":null},\"tipo\":\"image/png\",\"disposicion\":null}],\"contenidos\":null,\"confidencialidad\":false,\"sinLeer\":false,\"Type\":\"Mensaje\",\"id\":\"6f2afc0e-af7f-4e92-aca0-97f310ea7d29\",\"mensaje\":\"<div  align='justify'><p align='justify'>Saludos Andrés Perez Díaz, <br><br>Se anexa el certificado de completitud exitoso para el curso tomado el 27 de abril de 2021.<br><br>De acuerdo con el Art. 7° de la Ley 1843 de 2017 que adiciona el parágrafo 2° del Art. 136 de la Ley 769 de 2002, cuando se demuestre que la orden de comparendo por infracción a las normas de tránsito detectada por sistemas automáticos, semiautomáticos y otros medios tecnológicos, no fue notificada o indebidamente notificada, los términos establecidos para la reducción de la sanción comenzarán a correr a partir de la fecha de la notificación del comparendo.<br><br>Para ello, puede presentar por escrito ante la Subdirección de Contravenciones de la Secretaría Distrital de Movilidad la solicitud de revocatoria directa, del acto administrativo por medio del cual se impone la sanción, esta figura se encuentra regulada en el Art. 93 y siguientes de la Ley 1437 de 2011.</p></div>\",\"fechaEnvio\":\"06/16/2021 07:41:46\",\"entregado\":true,\"tags\":null},{\"asunto\":\"SendGridB2C07\",\"remitente\":{\"correo\":\"hola@movilidadbogota.gov.co\",\"usuario\":null},\"destinatarios\":[{\"correo\":\"correo@gmail.com\",\"usuario\":{\"identificacion\":\"CC-79590984\",\"organizacion\":\"CC-79590984\"}}],\"destinatariosCopia\":null,\"destinatariosOcultos\":null,\"adjuntos\":[{\"nombre\":\"NuevoNombre.png\",\"uri\":{\"rel\":\"nuevo.png\",\"href\":\"https://stcomunicacionesmovdev.blob.core.windows.net/comunicaciones/temporal/7c95fd7c-f192-4e5c-be86-f12f3864e495.png\",\"method\":null},\"tipo\":\"image/png\",\"disposicion\":null}],\"contenidos\":null,\"confidencialidad\":false,\"sinLeer\":false,\"Type\":\"Mensaje\",\"id\":\"74563d5e-7a7b-4508-9874-de43d288b2bb\",\"mensaje\":\"<div  align='justify'><p align='justify'>Saludos Andrés Perez Díaz, <br><br>Se anexa el certificado de completitud exitoso para el curso tomado el 27 de abril de 2021.</p></div>\",\"fechaEnvio\":\"06/15/2021 15:47:57\",\"entregado\":true,\"tags\":null}]",
+                      "descripcion": null
+                    }
+                  }
                 }
               }
             }
           }
         },
-        "description": "Permite consultar mensajes de un usuario. Este servicio debe verificar que quien esta consultando los mensajes tiene en su profile el mismo correo registrado al que esta accediendo.",
+        "description": "Permite consultar mensajes de un usuario, dado un conjunto de parámetros.",
         "parameters": [
           {
             "schema": {
@@ -140,7 +158,7 @@
             },
             "in": "query",
             "name": "sinLeer",
-            "description": "atributo que indica si el mensaje fue leído"
+            "description": "Atributo que indica si el mensaje fue leído"
           },
           {
             "schema": {
@@ -148,7 +166,7 @@
             },
             "in": "query",
             "name": "id",
-            "description": "identificador de la comunicación"
+            "description": "Identificador de la comunicación"
           }
         ]
       }
@@ -231,11 +249,27 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/Evento"
+              },
+              "examples": {
+                "Ejemplo": {
+                  "value": [
+                    {
+                      "email": "correo@gmail.com",
+                      "event": "open",
+                      "ip": "66.102.8.95",
+                      "sg_content_type": "html",
+                      "sg_event_id": "f_aHV-YcSmCYKYpKtbC1cA",
+                      "sg_message_id": "JYBR1Ew0Sr-KbkvklPeo4w.filterdrecv-79b856d5bc-9kpbj-1-60C00B03-73.0",
+                      "timestamp": 1623198481,
+                      "useragent": "Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko Firefox/11.0 (via ggpht.com GoogleImageProxy)"
+                    }
+                  ]
+                }
               }
             }
           }
         },
-        "description": "Cada evento que se coloca se agrega a la lista de eventos de la comunicacion. Para el DELIVERY existe un evento, pero si adicionalmente el correo es marcado como SPAM, se registra en un evento diferente. No pueden existir un evento DELIVERY y un evento REJECT al mismo tiempo para una comunicacion.\n\nEsta operación actualiza la información de DELIVERY en la versión OnPremise de notificaciones, cuando se confirma."
+        "description": "Los eventos se categorizan en DELIVERY, SPAM y REJECT.\nCada evento que se coloca se agrega a la lista de eventos de la comunicacion. Para el DELIVERY existe un evento, pero si adicionalmente el correo es marcado como SPAM, se registra en un evento diferente. No pueden existir un evento DELIVERY y un evento REJECT al mismo tiempo para una comunicacion."
       }
     },
     "/v1/adjuntos": {
@@ -249,6 +283,15 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Link.v1"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "codigo": 200,
+                      "mensaje": "{\"rel\":\"certificado.jpg\",\"href\":\"https://stcomunicacionesmovdev.blob.core.windows.net/comunicaciones/temporal/f9acf730-437b-424d-a075-fdc232897328.jpg\",\"method\":null}",
+                      "descripcion": null
+                    }
+                  }
                 }
               }
             }
@@ -276,7 +319,13 @@
               "schema": {
                 "$ref": "#/components/schemas/File"
               },
-              "examples": {}
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "id": "string"
+                  }
+                }
+              }
             }
           }
         }
@@ -441,13 +490,6 @@
               "type": "string"
             },
             "in": "query",
-            "name": "sinLeer"
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
             "name": "criteria"
           },
           {
@@ -475,7 +517,7 @@
             }
           }
         },
-        "description": "",
+        "description": "Permite la creación y envío de comunicaciones de tipo sms.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -826,6 +868,28 @@
           }
         },
         "description": ""
+      },
+      "RespuestaEstandar": {
+        "title": "RespuestaEstandar",
+        "type": "object",
+        "properties": {
+          "codigo": {
+            "type": "integer",
+            "description": "Código de respuesta http"
+          },
+          "mensaje": {
+            "type": "string",
+            "description": "Mensaje de la respuesta"
+          },
+          "descripcion": {
+            "type": "string",
+            "description": "Descripción detallada de la respuesta"
+          }
+        },
+        "required": [
+          "codigo",
+          "mensaje"
+        ]
       }
     }
   }
