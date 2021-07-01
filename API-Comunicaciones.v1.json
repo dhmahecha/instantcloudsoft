@@ -352,7 +352,7 @@
                   "$ref": "#/components/schemas/Link.v1"
                 },
                 "examples": {
-                  "example-1": {
+                  "Ejemplo respuesta": {
                     "value": {
                       "codigo": 200,
                       "mensaje": "{\"rel\":\"certificado.jpg\",\"href\":\"https://stcomunicacionesmovdev.blob.core.windows.net/comunicaciones/temporal/f9acf730-437b-424d-a075-fdc232897328.jpg\",\"method\":null}",
@@ -377,6 +377,22 @@
             "name": "archivo",
             "required": true,
             "description": "Representa el nombre el archivo que se quiere subir."
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Content-Type",
+            "description": "multipart/form-data"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Authorization",
+            "description": "Token JWT del usuario"
           }
         ],
         "description": "Permite cargar los archivos que seran usados como adjuntos en uno o mas correos. Por defecto los archivos cargados como adjuntos se eliminan cuando el correo se envia. Sin embargo, con este flag se le indica a comunicaciones que no borre el archivo con el envio (por defecto estara disponible 1 mes). Esto para escenarios donde debo enviar multiples correos con el mismo archivo como adjunto. Sino se envia, por defecto es false.\nNo se pueden subir archivos de mas de 4 MB.\n\nEsto retorna un objeto Link, donde el atributo rel es el nombre del archivo (el que el usuario dejo) y el href seria la ruta retornada por el Blob Storage. Se deben crear dos contenedores: \nEl container en el blob storage seria \"comunicaciones\".\n\nblobStorage.../comunicaciones/persistente **Donde se suben los archivos que indican que no se borran y se mantienen un mes.**\n.../comunicaciones/temporal **Donde se suben los archivos que se eliminan cuando se envia el correo.**",
@@ -384,15 +400,9 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/File"
+                "type": "object"
               },
-              "examples": {
-                "example-1": {
-                  "value": {
-                    "id": "string"
-                  }
-                }
-              }
+              "examples": {}
             }
           }
         }
@@ -446,7 +456,7 @@
             }
           }
         },
-        "description": "Cada evento que se coloca se agrega a la lista de eventos de la comunicacion. Para el DELIVERY existe un evento, pero si adicionalmente el correo es marcado como SPAM, se registra en un evento diferente. No pueden existir un evento DELIVERY y un evento REJECT al mismo tiempo para una comunicacion.\n\nEsta operación actualiza la información de DELIVERY en la versión OnPremise de notificaciones, cuando se confirma.",
+        "description": "Los eventos se categorizan en DELIVERY, SPAM y REJECT.\nREJECT: Dropped y Bounced\nDELIVERY: Delivered, Opened y Clicked\nSPAM: Spam Reports\nSe recibe un arreglo de eventos por, cada uno se categoriza y se almacena por comunicación generada. Solo se puede almacenar un tipo de evento REJECT y un tipo de evento DELIVERY. Si ya existe un evento de tipo DELIVERY para una comunicación y posteriormente llega otro tipo de evento no será recibido. Si ya se ha almacenado un evento de tipo SPAM, no se debe permitir el almacenamiento de un evento de tipo REJECT.",
         "requestBody": {
           "content": {
             "application/json": {
