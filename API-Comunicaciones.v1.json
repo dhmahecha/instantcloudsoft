@@ -702,6 +702,15 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Error al tratar de procesar la solicitud"
+          },
+          "401": {
+            "description": "El usuario con identificación {identificacion} no esta autorizado para acceder a la comunicación {id}\n"
+          },
+          "404": {
+            "description": "No se encontraron adjuntos relacionados a la comunicación asociada al identificador {id} e identificación {identificacion}\nNo se encontró comunicación asociada a la identificacion {identificacion} con identificador {id}"
           }
         },
         "operationId": "get-v1-adjuntos-idComunicacion-consultar",
@@ -728,7 +737,7 @@
       "Adjunto": {
         "title": "Adjunto",
         "type": "object",
-        "description": "",
+        "description": "Schema de tipo adjunto.",
         "properties": {
           "nombre": {
             "type": "string",
@@ -799,7 +808,8 @@
             "description": "Si es un mensaje aqui tendria la fecha de envio y si es notificacion aqui tendria la fecha de notificado. Este atributo es para propositos de consulta."
           },
           "entregado": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Indica si el mensaje fue envíado."
           },
           "sinLeer": {
             "type": "boolean",
@@ -911,7 +921,7 @@
         "required": [
           "identificacion"
         ],
-        "description": ""
+        "description": "Schema de tipo usuario"
       },
       "Ideunico.v1": {
         "title": "IdeUnico",
@@ -935,22 +945,24 @@
             "type": "string"
           },
           "telefonoOrigen": {
-            "type": "string"
+            "type": "string",
+            "description": "Télefono desde donde se envía el sms"
           },
           "telefonoDestino": {
-            "type": "string"
+            "type": "string",
+            "description": "teléfono destono que recibira el sms"
           },
           "fechaEnvio": {
-            "type": "string"
+            "type": "string",
+            "description": "fecha de envío del sms"
           },
           "entregado": {
-            "type": "boolean"
-          },
-          "sinLeer": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Indica si el sms fue envíado"
           },
           "tags": {
             "type": "array",
+            "description": "Es un arreglo de mensajes para asignar atributos particulares a un sms.",
             "items": {
               "$ref": "#/components/schemas/Param"
             }
@@ -958,23 +970,27 @@
           "destinatario": {
             "$ref": "#/components/schemas/Usuario.v1"
           }
-        }
+        },
+        "required": [
+          "contenido",
+          "telefonoOrigen",
+          "telefonoDestino",
+          "fechaEnvio",
+          "destinatario"
+        ]
       },
       "Param": {
         "title": "Param",
         "type": "object",
+        "description": "",
         "properties": {
           "name": {
             "type": "string"
           },
           "value": {
             "type": "string"
-          },
-          "": {
-            "type": "string"
           }
-        },
-        "description": ""
+        }
       },
       "RespuestaEstandar": {
         "title": "RespuestaEstandar",
@@ -996,7 +1012,8 @@
         "required": [
           "codigo",
           "mensaje"
-        ]
+        ],
+        "description": "Tipo de respuesta estandar."
       }
     }
   }
