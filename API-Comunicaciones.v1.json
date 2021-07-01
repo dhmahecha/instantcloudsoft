@@ -34,6 +34,15 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "los valores requeridos para la comunicacion no son validos\nOcurrio un error al tratar de procesar la solicitud"
+          },
+          "401": {
+            "description": "Error al obtener la información del usuario"
+          },
+          "404": {
+            "description": "Ocurrio un error al tratar de Adjuntar el archivo, archivo no encontrado en el storage"
           }
         },
         "operationId": "post-v1-mensajes",
@@ -78,7 +87,17 @@
             }
           }
         },
-        "description": "Esta operación permite crear un mensaje"
+        "description": "Esta operación permite crear un mensaje",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Authorization",
+            "description": "Token JWT del usuario"
+          }
+        ]
       },
       "get": {
         "summary": "Consultar mensajes",
@@ -141,6 +160,14 @@
             "in": "query",
             "name": "pagina",
             "description": "Cada resultado se retorna paginado, con cada pagina con un maximo de 20 mensjes"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Authorization",
+            "description": "Token JWT del usuario"
           }
         ]
       },
@@ -154,9 +181,24 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Mensaje"
+                },
+                "examples": {
+                  "Ejemplo respuesta": {
+                    "value": {
+                      "codigo": 200,
+                      "mensaje": "{\"asunto\":\"Certificado de completitud curso\",\"remitente\":{\"correo\":\"hola@movilidadbogota.gov.co\",\"usuario\":null},\"destinatarios\":[{\"correo\":\"correo@gmail.com\",\"usuario\":{\"identificacion\":\"CC-79590984\",\"organizacion\":\"CC-79590984\"}}],\"destinatariosCopia\":null,\"destinatariosOcultos\":null,\"adjuntos\":[{\"nombre\":\"certificado.jpg\",\"uri\":{\"rel\":\"certificado.jpg\",\"href\":\"https://stcomunicacionesmovdev.blob.core.windows.net/comunicaciones/temporal/a6429cc2-a079-48f8-b366-b7e133ce2413.jpg\",\"method\":null},\"tipo\":\"image/png\",\"disposicion\":null}],\"contenidos\":null,\"confidencialidad\":false,\"sinLeer\":false,\"Type\":\"Mensaje\",\"id\":\"afa52848-b3ef-4f2a-b321-6ebc7459e9d6\",\"mensaje\":\"<div  align='justify'><p align='justify'>Saludos Andrés Perez Díaz, <br><br>Se anexa el certificado de completitud exitoso para el curso tomado el 27 de abril de 2021.<br><br>De acuerdo con el Art. 7° de la Ley 1843 de 2017 que adiciona el parágrafo 2° del Art. 136 de la Ley 769 de 2002, cuando se demuestre que la orden de comparendo por infracción a las normas de tránsito detectada por sistemas automáticos, semiautomáticos y otros medios tecnológicos, no fue notificada o indebidamente notificada, los términos establecidos para la reducción de la sanción comenzarán a correr a partir de la fecha de la notificación del comparendo.<br><br>Para ello, puede presentar por escrito ante la Subdirección de Contravenciones de la Secretaría Distrital de Movilidad la solicitud de revocatoria directa, del acto administrativo por medio del cual se impone la sanción, esta figura se encuentra regulada en el Art. 93 y siguientes de la Ley 1437 de 2011.</p></div>\",\"fechaEnvio\":null,\"entregado\":false,\"tags\":null}",
+                      "descripcion": null
+                    }
+                  }
                 }
               }
             }
+          },
+          "400": {
+            "description": "Ocurrio un error al tratar de procesar la solicitud"
+          },
+          "404": {
+            "description": "Comunicación con identificador {id}, para el número de identificación {identificacion}, no encontrada"
           }
         },
         "description": "Operación de actualización de atributos de un mensaje. Permite actualizar el atributo SinLeer para un mensaje dada también la identificación",
