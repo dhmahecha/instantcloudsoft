@@ -33,10 +33,43 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/Comunicacion"
+              },
+              "examples": {
+                "Ejemplo Creación": {
+                  "value": {
+                    "Asunto": "Certificado de completitud curso",
+                    "Mensaje": "<div  align='justify'><p align='justify'>Saludos Andrés Perez Díaz, <br><br>Se anexa el certificado de completitud exitoso para el curso tomado el 27 de abril de 2021.<br><br>De acuerdo con el Art. 7° de la Ley 1843 de 2017 que adiciona el parágrafo 2° del Art. 136 de la Ley 769 de 2002, cuando se demuestre que la orden de comparendo por infracción a las normas de tránsito detectada por sistemas automáticos, semiautomáticos y otros medios tecnológicos, no fue notificada o indebidamente notificada, los términos establecidos para la reducción de la sanción comenzarán a correr a partir de la fecha de la notificación del comparendo.<br><br>Para ello, puede presentar por escrito ante la Subdirección de Contravenciones de la Secretaría Distrital de Movilidad la solicitud de revocatoria directa, del acto administrativo por medio del cual se impone la sanción, esta figura se encuentra regulada en el Art. 93 y siguientes de la Ley 1437 de 2011.</p></div>",
+                    "Destinatarios": [
+                      {
+                        "Correo": "correo@gmail.com",
+                        "Usuario": {
+                          "Identificacion": "CC-79590984",
+                          "Organizacion": "CC-79590984"
+                        }
+                      }
+                    ],
+                    "DestinatariosCopia": null,
+                    "DestinatariosOcultos": null,
+                    "Adjuntos": [
+                      {
+                        "nombre": "certificado.jpg",
+                        "uri": {
+                          "rel": "certificado.jpg",
+                          "href": "https://stcomunicacionesmovprod.blob.core.windows.net/comunicaciones/temporal/51e5dc20-b720-428f-8a63-4573465b7866.jpg",
+                          "method": null
+                        },
+                        "tipo": "image/jpg"
+                      }
+                    ],
+                    "Contenidos": null,
+                    "Confidencialidad": false
+                  }
+                }
               }
             }
           }
-        }
+        },
+        "description": "Esta operación permite crear un mensaje"
       },
       "get": {
         "summary": "Consultar mensajes",
@@ -99,7 +132,7 @@
             }
           }
         },
-        "description": "Permite actualizar el atributo SinLeer para un mensaje dada también la identificación",
+        "description": "Operación de actualización de atributos de un mensaje. Permite actualizar el atributo SinLeer para un mensaje dada también la identificación",
         "parameters": [
           {
             "schema": {
