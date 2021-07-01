@@ -455,7 +455,7 @@
         }
       ],
       "get": {
-        "summary": "Acceder al contenido de una comunicacion",
+        "summary": "Acceder al contenido de un mensaje por id",
         "tags": [],
         "responses": {
           "200": {
@@ -637,7 +637,7 @@
         }
       ],
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Acceder al contenido del sms por id",
         "tags": [],
         "responses": {
           "200": {
